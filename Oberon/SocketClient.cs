@@ -10,7 +10,7 @@ namespace Oberon
 {
     public class SocketClient
     {
-        public WebSocket Server;
+        public WebSocket Client;
 
         public SocketClient(string host)
         {
@@ -19,16 +19,26 @@ namespace Oberon
 
         void Start(string host)
         {
-            Server = new WebSocket("ws://" + host);
-            Server.Connect();
-            Server.OnMessage += OnMessage;
+            InputForwarder.Instance.Reset();
+
+            Client = new WebSocket("ws://" + host);
+            Client.Connect();
+            Client.OnMessage += OnMessage;
+            Client.OnClose += OnClose;
+            Client.OnError += OnClose;
+        }
+
+        void OnClose(object sender, EventArgs e)
+        {
+            InputForwarder.Instance.Reset();
+            App.Instance.Client = null;
         }
 
         private void OnMessage(object sender, MessageEventArgs e)
         {
             var data = e.RawData;
 
-            // 0xFF Represents an input packet
+            // 0xFF Represents a controller input packet
             if (data[0] == 0xFF)
             {
                 InputForwarder.Instance.InjectInput(data);
