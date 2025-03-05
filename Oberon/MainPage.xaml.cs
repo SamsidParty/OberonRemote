@@ -98,22 +98,45 @@ namespace Oberon
 
         private async void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e.AddedItems.Count() != 1) { return; }
             remoteList.SelectedIndex = -1;
-            if (loadingRing.IsActive) { return; }
+        }
 
-            loadingRing.IsActive = true;
-            var remote = ((PairedRemote)e.AddedItems.First());
+        private async Task DisconnectActiveRemote()
+        {
+            var activeRemote = App.Instance.Client?.Remote ?? null;
 
-            if (remote.IsConnected)
+            if (activeRemote != null)
             {
                 App.Instance.Client?.Client?.Close();
                 App.Instance.Client = null;
 
-                while (remote.IsConnected)
+                while (activeRemote.IsConnected)
                 {
                     await Task.Delay(250);
                 }
+            }
+        }
+
+        private async Task ConnectRemote(PairedRemote remote)
+        {
+            App.Instance.Client = new SocketClient(remote);
+
+            while (!remote.IsConnected)
+            {
+                await Task.Delay(250);
+            }
+        }
+
+        private async void RemoteItemClicked(object sender, ItemClickEventArgs e)
+        {
+            if (loadingRing.IsActive) { return; }
+
+            loadingRing.IsActive = true;
+            var remote = (PairedRemote)e.ClickedItem;
+
+            if (remote.IsConnected)
+            {
+                await DisconnectActiveRemote();
 
                 // Disconnect notification
                 new ToastContentBuilder()
@@ -123,12 +146,8 @@ namespace Oberon
             }
             else
             {
-                App.Instance.Client = new SocketClient(remote.IPAddress);
-
-                while (!remote.IsConnected)
-                {
-                    await Task.Delay(250);
-                }
+                await DisconnectActiveRemote();
+                await ConnectRemote(remote);
 
                 // Success notification
                 new ToastContentBuilder()

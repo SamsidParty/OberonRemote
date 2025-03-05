@@ -11,12 +11,12 @@ namespace Oberon
     public class SocketClient
     {
         public WebSocket Client;
-        public string Host;
+        public PairedRemote Remote;
 
-        public SocketClient(string host)
+        public SocketClient(PairedRemote remote)
         {
-            Host = host;
-            new Thread(() => Start(host)).Start();
+            Remote = remote;
+            new Thread(() => Start(Remote.IPAddress)).Start();
         }
 
         void Start(string host)
@@ -45,6 +45,11 @@ namespace Oberon
             {
                 InputForwarder.Instance.InjectInput(data);
             }
+        }
+
+        public void Close()
+        {
+            Client.Close();
         }
     }
 }

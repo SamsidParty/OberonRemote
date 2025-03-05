@@ -18,16 +18,24 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <ListView x:Name="remoteList" ItemsSource="{x:Bind Remotes}" SelectionChanged="SelectionChanged" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="0">
+            <ListView x:Name="remoteList" ItemsSource="{x:Bind Remotes}" SelectionChanged="SelectionChanged" ItemClick="RemoteItemClicked" IsItemClickEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="0">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="local:PairedRemote">
-                        <StackPanel Orientation="Vertical" Margin="10">
+                        <StackPanel Background="{x:Bind Background}" Orientation="Vertical" Margin="0" Padding="10" HorizontalAlignment="Stretch">
                             <TextBlock FontSize="20" FontFamily="Bahnschrift SemiBold" Text="{x:Bind DisplayName}"/>
                             <TextBlock FontSize="14" Text="{x:Bind IPAddress}"/>
                             <TextBlock FontSize="14" Text="{x:Bind ConnectedText}"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="BorderThickness" Value="0" />
+                        <Setter Property="Padding" Value="0" />
+                        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
             </ListView>
         </Grid>
 

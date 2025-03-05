@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Media;
 
 namespace Oberon
 {
@@ -18,7 +21,7 @@ namespace Oberon
         {
             get
             {
-                return (App.Instance.Client?.Client?.IsAlive ?? false) && App.Instance.Client.Host == IPAddress;
+                return (App.Instance.Client?.Client?.IsAlive ?? false) && App.Instance.Client.Remote.InternalID == InternalID;
             }
         }
 
@@ -28,6 +31,15 @@ namespace Oberon
             get
             {
                 return IsConnected ? "Connected" : "Disconnected";
+            }
+        }
+
+        [JsonIgnore]
+        public Brush Background
+        {
+            get
+            {
+                return IsConnected ? new SolidColorBrush((Color)Application.Current.Resources["SystemAccentColor"]) : new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
             }
         }
     }
