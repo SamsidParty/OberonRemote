@@ -128,7 +128,9 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Networking.cs" />
+    <Compile Include="PairedRemote.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettingsFile.cs" />
     <Compile Include="SocketClient.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -162,6 +164,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications">
       <Version>7.1.3</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.3</Version>
     </PackageReference>
     <PackageReference Include="Rssdp">
       <Version>4.0.4</Version>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Toolkit.Uwp.Notifications;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -21,14 +22,32 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Oberon
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainPage : Page
     {
+        public SettingsFile Settings;
+        public ObservableCollection<PairedRemote> Remotes { get; } = new ObservableCollection<PairedRemote>();
+
+        public bool InteractionEnabled => !loadingRing.IsActive;
+
         public MainPage()
         {
             this.InitializeComponent();
+            RefreshSettings();
+        }
+
+        private async Task RefreshSettings()
+        {
+            remoteList.SelectedIndex = -1;
+
+            Settings = await SettingsFile.Get();
+
+            // Update observable remotes list
+            Remotes.Clear();
+            foreach (var remote in Settings.PairedRemotes)
+            {
+                Remotes.Add(remote);
+            }
+
         }
 
         private void AddRemote(object sender, RoutedEventArgs e)
@@ -56,11 +75,71 @@ namespace Oberon
             }
             else
             {
+                // Save the paired remote
+                await RefreshSettings();
+                Settings.PairedRemotes.Add(new PairedRemote()
+                {
+                    DisplayName = connectionResult.Split("\n")[1],
+                    InternalID = Guid.NewGuid().ToString(),
+                    IPAddress = ipToConnect
+                });
+                await SettingsFile.Write(Settings);
+
+                // Update
+                await RefreshSettings();
+
+                // Success notification
                 new ToastContentBuilder()
                     .AddText("Remote Pairing Complete")
                     .AddText("Paired with " + connectionResult.Split("\n")[1])
                     .Show();
             }
+        }
+
+        private async void SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count() != 1) { return; }
+            remoteList.SelectedIndex = -1;
+            if (loadingRing.IsActive) { return; }
+
+            loadingRing.IsActive = true;
+            var remote = ((PairedRemote)e.AddedItems.First());
+
+            if (remote.IsConnected)
+            {
+                App.Instance.Client?.Client?.Close();
+                App.Instance.Client = null;
+
+                while (remote.IsConnected)
+                {
+                    await Task.Delay(250);
+                }
+
+                // Disconnect notification
+                new ToastContentBuilder()
+                    .AddText("Remote Disconnected")
+                    .AddText(remote.DisplayName)
+                    .Show();
+            }
+            else
+            {
+                App.Instance.Client = new SocketClient(remote.IPAddress);
+
+                while (!remote.IsConnected)
+                {
+                    await Task.Delay(250);
+                }
+
+                // Success notification
+                new ToastContentBuilder()
+                    .AddText("Remote Connected")
+                    .AddText(remote.DisplayName)
+                    .Show();
+            }
+
+
+            loadingRing.IsActive = false;
+            await RefreshSettings();
         }
     }
 }

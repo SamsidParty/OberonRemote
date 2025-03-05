@@ -11,9 +11,11 @@ namespace Oberon
     public class SocketClient
     {
         public WebSocket Client;
+        public string Host;
 
         public SocketClient(string host)
         {
+            Host = host;
             new Thread(() => Start(host)).Start();
         }
 
@@ -21,7 +23,7 @@ namespace Oberon
         {
             InputForwarder.Instance.Reset();
 
-            Client = new WebSocket("ws://" + host);
+            Client = new WebSocket(host);
             Client.Connect();
             Client.OnMessage += OnMessage;
             Client.OnClose += OnClose;
