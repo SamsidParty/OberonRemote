@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -30,14 +32,27 @@ namespace Oberon
 
         private void AddRemote(object sender, RoutedEventArgs e)
         {
+            if (loadingRing.IsActive) { return; }
+
             remoteIP.Text = ""; // Clear text
-            addRemoteDialog.ShowAsync();
+            DialogSemaphore.ShowContentDialogInSemaphore(addRemoteDialog);
         }
 
-        private void FinishRemotePairing(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private async void FinishRemotePairing(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            var ipToConnect = remoteIP.Text;
-            Debug.WriteLine(ipToConnect);
+            loadingRing.IsActive = true;
+
+            var ipToConnect = Networking.FormatWebSocketHost(remoteIP.Text);
+
+            var connectionResult = await Task.Run(async () => await ConnectionTester.TestConnectionToIP(ipToConnect));
+
+            loadingRing.IsActive = false;
+
+            if (!connectionResult.Contains("Success"))
+            {
+                remoteFailedErrorMessage.Text = connectionResult;
+                await DialogSemaphore.ShowContentDialogInSemaphore(remoteFailedDialog);
+            }
         }
     }
 }

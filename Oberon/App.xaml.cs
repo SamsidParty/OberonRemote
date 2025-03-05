@@ -48,7 +48,6 @@ namespace Oberon
         async void InitServices()
         {
             InputInjector = new InputForwarder();
-            Client = new SocketClient("192.168.100.8:26401");
         }
 
 
