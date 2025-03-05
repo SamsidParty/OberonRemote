@@ -39,6 +39,7 @@ namespace Oberon
             Instance = this;
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            this.RequiresPointerMode = ApplicationRequiresPointerMode.WhenRequested;
             InitServices();
         }
 
@@ -58,6 +59,9 @@ namespace Oberon
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
+            Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().SetDesiredBoundsMode(Windows.UI.ViewManagement.ApplicationViewBoundsMode.UseCoreWindow);
+            this.FocusVisualKind = FocusVisualKind.Reveal;
+
             Frame rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,

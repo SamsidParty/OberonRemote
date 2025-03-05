@@ -26,5 +26,10 @@ namespace Oberon
         {
             this.InitializeComponent();
         }
+
+        private void AddRemote(object sender, RoutedEventArgs e)
+        {
+            addRemoteDialog.ShowAsync();
+        }
     }
 }

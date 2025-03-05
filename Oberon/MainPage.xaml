@@ -9,5 +9,28 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <TextBlock HorizontalAlignment="Left" Margin="36,36,0,0" TextWrapping="Wrap" Text="Paired Remotes" VerticalAlignment="Top" Height="62" Width="280" FontFamily="Bahnschrift SemiBold" FontSize="30"/>
+        <Button Click="AddRemote" Content="+ Add Remote" Margin="36,0,0,36" VerticalAlignment="Bottom" FontFamily="Bahnschrift Light" Height="37" Width="126" FontSize="16"/>
+
+        <ContentDialog x:Name="addRemoteDialog"
+                       Title="Add New Remote"
+                       PrimaryButtonText="Add"
+                       CloseButtonText="Cancel"
+                       >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="• You'll need to install the Oberon Remote app on another device" Grid.Row="0" FontSize="11"/>
+                <TextBlock Text="• The remote and this Xbox must be on the same local network" Grid.Row="1" FontSize="11"/>
+                <TextBlock Text="• The remote will display its IP address near the top" Grid.Row="2" FontSize="11"/>
+                <TextBlock Text="• In case the remote changes its IP in the future, you'll have to pair again" Grid.Row="3" FontSize="11" Margin="0 0 0 10"/>
+                <TextBox x:Name="InputBox" Width="Auto" Height="32" Grid.Row="4" PlaceholderText="Remote IP Address"/>
+            </Grid>
+        </ContentDialog>
     </Grid>
 </Page>
