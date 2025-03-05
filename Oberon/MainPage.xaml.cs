@@ -30,19 +30,14 @@ namespace Oberon
 
         private void AddRemote(object sender, RoutedEventArgs e)
         {
+            remoteIP.Text = ""; // Clear text
             addRemoteDialog.ShowAsync();
         }
 
         private void FinishRemotePairing(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             var ipToConnect = remoteIP.Text;
-            remoteIP.Text = "";
             Debug.WriteLine(ipToConnect);
-        }
-
-        private void CancelRemotePairing(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-            remoteIP.Text = ""; // Clear text
         }
     }
 }
