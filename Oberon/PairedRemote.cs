@@ -21,7 +21,7 @@ namespace Oberon
         {
             get
             {
-                return (App.Instance.Client?.Client?.IsAlive ?? false) && App.Instance.Client.Remote.InternalID == InternalID;
+                return (App.Instance.Client?.Client?.State == System.Net.WebSockets.WebSocketState.Open) && App.Instance.Client.Remote.InternalID == InternalID;
             }
         }
 

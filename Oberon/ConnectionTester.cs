@@ -16,7 +16,6 @@ namespace Oberon
         {
             try
             {
-                CancellationTokenSource source = new CancellationTokenSource();
                 using (var ws = new ClientWebSocket())
                 {
                     await ws.ConnectAsync(new Uri(Networking.FormatWebSocketHost(ip)), CancellationToken.None);

@@ -107,7 +107,7 @@ namespace Oberon
 
             if (activeRemote != null)
             {
-                App.Instance.Client?.Client?.Close();
+                App.Instance.Client?.Close();
                 App.Instance.Client = null;
 
                 while (activeRemote.IsConnected)

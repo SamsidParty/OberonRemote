@@ -17,24 +17,13 @@ namespace Oberon.Remote.Desktop
     {
         WebSocketServer Server;
 
-        SynchronizedCollection<IWebSocketConnection> Connections = new SynchronizedCollection<IWebSocketConnection>();
+        SynchronizedCollection<CommanderClient> Connections = new SynchronizedCollection<CommanderClient>();
+        static byte[] CurrentControllerState;
 
         [Command("forwardInput")]
         public static void ForwardInput(string input)
         {
-            var bytes = Convert.FromBase64String(input);
-            var server = Program.SocketServer.Server;
-
-            if (server != null) 
-            {
-                foreach (var socket in Program.SocketServer.Connections)
-                {
-                    if (socket.IsAvailable)
-                    {
-                        socket.Send(bytes);
-                    }
-                }
-            }
+            CurrentControllerState = Convert.FromBase64String(input);
         }
 
         // https://stackoverflow.com/a/27376368
@@ -61,7 +50,17 @@ namespace Oberon.Remote.Desktop
             {
                 socket.OnOpen = () =>
                 {
-                    Connections.Add(socket);
+                    var client = new CommanderClient(socket);
+                    Connections.Add(client);
+
+                    socket.OnClose = () => Connections.Remove(client);
+                    socket.OnBinary = (data) =>
+                    {
+                        if (data[0] == 0xFA) // Request the current controller packet
+                        {
+                            socket.Send(CurrentControllerState); // Send the latest controller packet
+                        }
+                    };
 
                     // Send the handshake packet
                     var machineName = Encoding.UTF8.GetBytes(Environment.MachineName);
@@ -70,9 +69,7 @@ namespace Oberon.Remote.Desktop
                     machineName.CopyTo(machineNamePacket, 1);
                     socket.Send(machineNamePacket);
                 };
-                socket.OnClose = () => Connections.Remove(socket);
-                socket.OnError = (_) => Connections.Remove(socket);
-                socket.OnMessage = message => Debug.WriteLine(message);
+                socket.OnError = (_) => { };
             });
         }
     }
