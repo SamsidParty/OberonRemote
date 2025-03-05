@@ -59,7 +59,17 @@ namespace Oberon.Remote.Desktop
             Server = new WebSocketServer("ws://0.0.0.0:26401");
             Server.Start(socket =>
             {
-                socket.OnOpen = () => Connections.Add(socket);
+                socket.OnOpen = () =>
+                {
+                    Connections.Add(socket);
+
+                    // Send the handshake packet
+                    var machineName = Encoding.UTF8.GetBytes(Environment.MachineName);
+                    var machineNamePacket = new byte[machineName.Length + 1];
+                    machineNamePacket[0] = 0xA; // Identifies the packet as the handshake packet
+                    machineName.CopyTo(machineNamePacket, 1);
+                    socket.Send(machineNamePacket);
+                };
                 socket.OnClose = () => Connections.Remove(socket);
                 socket.OnError = (_) => Connections.Remove(socket);
                 socket.OnMessage = message => Debug.WriteLine(message);

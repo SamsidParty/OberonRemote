@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.Notifications;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -52,6 +53,13 @@ namespace Oberon
             {
                 remoteFailedErrorMessage.Text = connectionResult;
                 await DialogSemaphore.ShowContentDialogInSemaphore(remoteFailedDialog);
+            }
+            else
+            {
+                new ToastContentBuilder()
+                    .AddText("Remote Pairing Complete")
+                    .AddText("Paired with " + connectionResult.Split("\n")[1])
+                    .Show();
             }
         }
     }

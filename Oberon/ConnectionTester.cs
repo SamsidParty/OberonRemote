@@ -24,16 +24,14 @@ namespace Oberon
 
                     while (ws.State == WebSocketState.Open)
                     {
-                        return "Success";
-
                         var result = await ws.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
                         if (result.MessageType == WebSocketMessageType.Close)
                         {
                             await ws.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
                         }
-                        else
+                        else if (result.MessageType == WebSocketMessageType.Binary && buffer[0] == 0xA) // first byte = 0xA identifies the packet as the handshake packet
                         {
-                            
+                            return "Success" + Encoding.UTF8.GetString(buffer).Split("\0")[0];
                         }
                     }
 
