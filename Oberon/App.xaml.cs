@@ -1,4 +1,5 @@
-﻿using Rssdp;
+﻿using Microsoft.Toolkit.Uwp.Notifications;
+using Rssdp;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,6 +11,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -29,6 +31,7 @@ namespace Oberon
 
         public SocketClient Client;
         public InputForwarder InputInjector;
+        public Persistence Persistence;
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -39,17 +42,25 @@ namespace Oberon
             Instance = this;
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            Windows.System.MemoryManager.AppMemoryUsageIncreased += OnMemoryIncreased;
+
             this.RequiresPointerMode = ApplicationRequiresPointerMode.WhenRequested;
             InitServices();
         }
 
-
+        private void OnMemoryIncreased(object sender, object e)
+        {
+            new ToastContentBuilder()
+                .AddText("Memory Usage Increased")
+                .AddText((MemoryManager.AppMemoryUsage * 1000000).ToString())
+                .Show();
+        }
 
         async void InitServices()
         {
+            Persistence = new Persistence();
             InputInjector = new InputForwarder();
         }
-
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points

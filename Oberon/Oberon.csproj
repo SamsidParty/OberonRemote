@@ -129,6 +129,7 @@
     </Compile>
     <Compile Include="Networking.cs" />
     <Compile Include="PairedRemote.cs" />
+    <Compile Include="Persistence.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingsFile.cs" />
     <Compile Include="SocketClient.cs" />

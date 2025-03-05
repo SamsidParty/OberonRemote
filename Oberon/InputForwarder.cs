@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Gaming.Input;
+using Windows.System;
 using Windows.UI.Input.Preview.Injection;
 using Windows.UI.Xaml.Controls;
 

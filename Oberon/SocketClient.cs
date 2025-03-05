@@ -38,6 +38,13 @@ namespace Oberon
 
         private void OnMessage(object sender, MessageEventArgs e)
         {
+            // Make sure only one client exists at a time
+            if (App.Instance.Client != this)
+            {
+                Close();
+                return;
+            }
+
             var data = e.RawData;
 
             // 0xFF Represents a controller input packet
