@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+	<!-- IgniteView -->
+	<ItemGroup>
+		<PackageReference Include="IgniteView.Desktop" Version="*" />
+		<PackageReference Include="Rssdp" Version="4.0.4" />
+		<PackageReference Include="Fleck" Version="1.2.0" />
+		<PackageReference Include="System.ServiceModel.Primitives" Version="8.1.1" />
+	</ItemGroup>
+	<PropertyGroup>
+		<DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+		<JSFramework>react</JSFramework>
+		<!-- This is required for IgniteView to know what js framework you are using -->
+		<ScriptsURL>https://raw.githubusercontent.com/SamsidParty/IgniteView/refs/heads/main/IgniteView.Scripts</ScriptsURL>
+		<PreBuildCommand>node -e "fetch('$(ScriptsURL)/Prebuild.js').then((c) =&gt; c.text().then(eval))" "$(ScriptsURL)" "$(MSBuildProjectDirectory.Replace('\', '\\'))" "$(Configuration)" "$(JSFramework)"</PreBuildCommand>
+		<PostBuildCommand>node -e "fetch('$(ScriptsURL)/Postbuild.js').then((c) =&gt; c.text().then(eval))" "$(ScriptsURL)" "$(MSBuildProjectDirectory.Replace('\', '\\'))" "$(Configuration)" "$(JSFramework)"</PostBuildCommand>
+	</PropertyGroup>
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+		<Exec Command="$(PreBuildCommand) &quot;$(OutputPath.Replace('\', '\\'))&quot;" />
+	</Target>
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="$(PostBuildCommand) &quot;$(OutputPath.Replace('\', '\\'))&quot;" />
+	</Target>
+
+</Project>
