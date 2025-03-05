@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -30,6 +31,18 @@ namespace Oberon
         private void AddRemote(object sender, RoutedEventArgs e)
         {
             addRemoteDialog.ShowAsync();
+        }
+
+        private void FinishRemotePairing(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            var ipToConnect = remoteIP.Text;
+            remoteIP.Text = "";
+            Debug.WriteLine(ipToConnect);
+        }
+
+        private void CancelRemotePairing(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            remoteIP.Text = ""; // Clear text
         }
     }
 }

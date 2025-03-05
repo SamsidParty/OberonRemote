@@ -16,6 +16,8 @@
                        Title="Add New Remote"
                        PrimaryButtonText="Add"
                        CloseButtonText="Cancel"
+                       PrimaryButtonClick="FinishRemotePairing"
+                       CloseButtonClick="CancelRemotePairing"
                        >
             <Grid>
                 <Grid.RowDefinitions>
@@ -29,7 +31,7 @@
                 <TextBlock Text="• The remote and this Xbox must be on the same local network" Grid.Row="1" FontSize="11"/>
                 <TextBlock Text="• The remote will display its IP address near the top" Grid.Row="2" FontSize="11"/>
                 <TextBlock Text="• In case the remote changes its IP in the future, you'll have to pair again" Grid.Row="3" FontSize="11" Margin="0 0 0 10"/>
-                <TextBox x:Name="InputBox" Width="Auto" Height="32" Grid.Row="4" PlaceholderText="Remote IP Address"/>
+                <TextBox x:Name="remoteIP" Width="Auto" Height="32" Grid.Row="4" PlaceholderText="Remote IP Address"/>
             </Grid>
         </ContentDialog>
     </Grid>
