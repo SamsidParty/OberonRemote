@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -27,12 +28,60 @@ namespace Oberon
         public SettingsFile Settings;
         public ObservableCollection<PairedRemote> Remotes { get; } = new ObservableCollection<PairedRemote>();
 
+        public PairedRemote HoveredRemote;
+
         public bool InteractionEnabled => !loadingRing.IsActive;
 
         public MainPage()
         {
             this.InitializeComponent();
+            Window.Current.CoreWindow.KeyDown += KeyDown;
+
             RefreshSettings();
+        }
+
+        private void KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
+        {
+            if (loadingRing.IsActive) { return; }
+
+            if (args.VirtualKey == VirtualKey.GamepadMenu)
+            {
+                if (HoveredRemote == null) { return; }
+
+                ContentDialog dialog = new ContentDialog
+                {
+                    Content = $"Are you sure you would like to remove '{HoveredRemote.DisplayName}' from the paired remotes?",
+                    Title = "Unpair Remote",
+                    PrimaryButtonText = "Cancel",
+                    SecondaryButtonText = "Remove"
+                };
+
+                dialog.SecondaryButtonClick += async (_sender, e) =>
+                {
+                    if (loadingRing.IsActive) { return; }
+                    loadingRing.IsActive = true;
+
+                    // Check if the remote is connected first
+                    if (HoveredRemote.IsConnected)
+                    {
+                        await DisconnectActiveRemote();
+                    }
+
+                    // Remove it
+                    await RefreshSettings();
+                    var remoteIndex = Settings.PairedRemotes.FindIndex((r) => r.InternalID == HoveredRemote.InternalID);
+
+                    if (remoteIndex < 0) { return; }
+
+                    Settings.PairedRemotes.RemoveAt(remoteIndex);
+                    await SettingsFile.Write(Settings);
+
+                    await RefreshSettings();
+                    loadingRing.IsActive = false;
+                };
+
+                DialogSemaphore.ShowContentDialogInSemaphore(dialog);
+            }
         }
 
         private async Task RefreshSettings()
@@ -113,6 +162,10 @@ namespace Oberon
 
         private async void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (e.AddedItems.Count > 0) {
+                HoveredRemote = (PairedRemote)e.AddedItems.First();
+            }
+
             remoteList.SelectedIndex = -1;
         }
 
