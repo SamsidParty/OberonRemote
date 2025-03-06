@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.Notifications;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -6,6 +7,8 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace Oberon
 {
@@ -39,6 +42,7 @@ namespace Oberon
                     if (result.MessageType == WebSocketMessageType.Close)
                     {
                         await Client.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
+                        throw new Exception("Socket closed");
                     }
                     else if (result.MessageType == WebSocketMessageType.Binary)
                     {
@@ -50,6 +54,12 @@ namespace Oberon
             }
             catch
             {
+                // Disconnect notification
+                new ToastContentBuilder()
+                    .AddText("Remote Disconnected")
+                    .AddText(Remote.DisplayName)
+                    .Show();
+
                 OnClose(null, null);
             }
         }
@@ -59,6 +69,11 @@ namespace Oberon
             InputForwarder.Instance.Reset();
             App.Instance.Client = null;
             GC.Collect();
+
+            if (MainPage.Instance != null)
+            {
+                MainPage.Instance.RefreshSettings();
+            }
         }
 
         private void OnMessage(byte[] data)

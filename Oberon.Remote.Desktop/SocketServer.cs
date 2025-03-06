@@ -18,7 +18,7 @@ namespace Oberon.Remote.Desktop
         WebSocketServer Server;
 
         SynchronizedCollection<CommanderClient> Connections = new SynchronizedCollection<CommanderClient>();
-        static byte[] CurrentControllerState;
+        static byte[] CurrentControllerState = new byte[20];
 
         [Command("forwardInput")]
         public static void ForwardInput(string input)
@@ -39,6 +39,8 @@ namespace Oberon.Remote.Desktop
 
         public SocketServer()
         {
+            CurrentControllerState[0] = 0xFF;
+
             var t = new Thread(Start);
             t.Start();
         }

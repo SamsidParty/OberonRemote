@@ -25,6 +25,8 @@ namespace Oberon
 {
     public sealed partial class MainPage : Page
     {
+        public static MainPage Instance;
+
         public SettingsFile Settings;
         public ObservableCollection<PairedRemote> Remotes { get; } = new ObservableCollection<PairedRemote>();
 
@@ -34,6 +36,7 @@ namespace Oberon
 
         public MainPage()
         {
+            Instance = this;
             this.InitializeComponent();
             Window.Current.CoreWindow.KeyDown += KeyDown;
 
@@ -84,7 +87,7 @@ namespace Oberon
             }
         }
 
-        private async Task RefreshSettings()
+        public async Task RefreshSettings()
         {
             remoteList.SelectedIndex = -1;
 
@@ -184,14 +187,22 @@ namespace Oberon
             }
         }
 
-        private async Task ConnectRemote(PairedRemote remote)
+        private async Task<bool> ConnectRemote(PairedRemote remote)
         {
             App.Instance.Client = new SocketClient(remote);
 
             while (!remote.IsConnected)
             {
+                // Connection failed
+                if (App.Instance.Client == null)
+                {
+                    return false;
+                }
+
                 await Task.Delay(250);
             }
+
+            return true;
         }
 
         private async void RemoteItemClicked(object sender, ItemClickEventArgs e)
@@ -204,23 +215,33 @@ namespace Oberon
             if (remote.IsConnected)
             {
                 await DisconnectActiveRemote();
-
-                // Disconnect notification
-                new ToastContentBuilder()
-                    .AddText("Remote Disconnected")
-                    .AddText(remote.DisplayName)
-                    .Show();
             }
             else
             {
                 await DisconnectActiveRemote();
-                await ConnectRemote(remote);
+                var result = await ConnectRemote(remote);
 
-                // Success notification
-                new ToastContentBuilder()
-                    .AddText("Remote Connected")
-                    .AddText(remote.DisplayName)
-                    .Show();
+                if (result)
+                {
+                    // Success notification
+                    new ToastContentBuilder()
+                        .AddText("Remote Connected")
+                        .AddText(remote.DisplayName)
+                        .Show();
+                }
+                else
+                {
+                    ContentDialog dialog = new ContentDialog
+                    {
+                        Content = "Failed to connect to the remote, please make sure the remote is running on your local network.",
+                        Title = "Connection Failed",
+                        PrimaryButtonText = "Ok"
+                    };
+
+                    DialogSemaphore.ShowContentDialogInSemaphore(dialog);
+
+                }
+
             }
 
 
