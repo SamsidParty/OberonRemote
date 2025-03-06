@@ -50,10 +50,7 @@ namespace Oberon
 
         private void OnMemoryIncreased(object sender, object e)
         {
-            new ToastContentBuilder()
-                .AddText("Memory Usage Increased")
-                .AddText((MemoryManager.AppMemoryUsage * 1000000).ToString())
-                .Show();
+            
         }
 
         async void InitServices()

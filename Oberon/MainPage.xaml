@@ -21,11 +21,19 @@
             <ListView x:Name="remoteList" ItemsSource="{x:Bind Remotes}" SelectionChanged="SelectionChanged" ItemClick="RemoteItemClicked" IsItemClickEnabled="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="0">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="local:PairedRemote">
-                        <StackPanel Background="{x:Bind Background}" Orientation="Vertical" Margin="0" Padding="10" HorizontalAlignment="Stretch">
-                            <TextBlock FontSize="20" FontFamily="Bahnschrift SemiBold" Text="{x:Bind DisplayName}"/>
-                            <TextBlock FontSize="14" Text="{x:Bind IPAddress}"/>
-                            <TextBlock FontSize="14" Text="{x:Bind ConnectedText}"/>
-                        </StackPanel>
+                        <Grid Background="{x:Bind Background}" Margin="0" Padding="10" HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Background="{x:Bind Background}" Orientation="Vertical" Margin="0" Padding="0" HorizontalAlignment="Stretch">
+                                <TextBlock FontSize="20" FontFamily="Bahnschrift SemiBold" Text="{x:Bind DisplayName}"/>
+                                <TextBlock FontSize="14" Text="{x:Bind IPAddress}" FontFamily="Cascadia Code"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Background="{x:Bind Background}" Orientation="Vertical" Margin="0" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                <TextBlock FontSize="14" VerticalAlignment="Center" Text="{x:Bind ConnectedText}"/>
+                            </StackPanel>
+                        </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.ItemContainerStyle>

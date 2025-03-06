@@ -30,7 +30,7 @@ namespace Oberon
         {
             get
             {
-                return IsConnected ? "Connected" : "Disconnected";
+                return IsConnected ? "✓ Connected" : "× Disconnected";
             }
         }
 

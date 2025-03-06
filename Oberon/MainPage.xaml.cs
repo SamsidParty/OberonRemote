@@ -108,9 +108,8 @@ namespace Oberon
             if (activeRemote != null)
             {
                 App.Instance.Client?.Close();
-                App.Instance.Client = null;
 
-                while (activeRemote.IsConnected)
+                while (activeRemote.IsConnected || App.Instance.Client != null)
                 {
                     await Task.Delay(250);
                 }

@@ -79,7 +79,7 @@ namespace Oberon
 
         public void Close()
         {
-            Client.Dispose();
+            Client.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
         }
     }
 }
