@@ -29,6 +29,16 @@ namespace Oberon
             IdlePlayer.Source = MediaSource.CreateFromUri(new Uri("ms-appx:///Data/idle.wav"));
             IdlePlayer.IsLoopingEnabled = true;
             IdlePlayer.AutoPlay = true;
+
+            ActivePlayer = new MediaPlayer();
+            ActivePlayer.Source = MediaSource.CreateFromUri(new Uri("ms-appx:///Data/navigate.wav"));
+            ActivePlayer.IsLoopingEnabled = false;
+            ActivePlayer.AutoPlay = false;
+        }
+
+        public void PlayRemoteSound()
+        {
+            ActivePlayer.Play();
         }
     }
 }

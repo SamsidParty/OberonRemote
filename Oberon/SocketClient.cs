@@ -85,8 +85,8 @@ namespace Oberon
                 return;
             }
 
-            // 0xFF Represents a controller input packet
-            if (data[0] == 0xFF)
+            
+            if (data[0] == 0xFF) // 0xFF Represents a controller input packet
             {
                 InputForwarder.Instance.InjectInput(data);
             }

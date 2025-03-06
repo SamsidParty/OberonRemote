@@ -9,11 +9,11 @@
   IgnorableNamespaces="uap mp rescap uap3">
 
   <Identity
-    Name="b485d1c2-dfb7-4b65-9210-8a6bd0321a68"
-    Publisher="CN=SamsidParty"
+    Name="55968SamsidGameStudios.OberonRemoteInput"
+    Publisher="CN=68C2D20A-96CA-43CC-A323-A549C2786CDA"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="b485d1c2-dfb7-4b65-9210-8a6bd0321a68" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="b485d1c2-dfb7-4b65-9210-8a6bd0321a68" PhonePublisherId="68C2D20A-96CA-43CC-A323-A549C2786CDA"/>
 
   <Properties>
     <DisplayName>Oberon</DisplayName>

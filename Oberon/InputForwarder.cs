@@ -74,6 +74,7 @@ namespace Oberon
                 if (!XboxButtonPressed)
                 {
                     XboxButtonPressed = true;
+                    App.Instance.Persistence.PlayRemoteSound();
                     Injector.InjectShortcut(InjectedInputShortcut.Start);
                 }
             }
