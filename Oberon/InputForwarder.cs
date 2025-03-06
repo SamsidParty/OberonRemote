@@ -95,6 +95,7 @@ namespace Oberon
 
         public void Reset()
         {
+            XboxButtonPressed = false;
             GamepadState = new InjectedInputGamepadInfo();
             Update();
         }

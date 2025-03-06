@@ -20,6 +20,14 @@
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <PackageCertificateThumbprint>E6CF245A9861D23A957821DF8BCBE569F1E0ADE7</PackageCertificateThumbprint>
     <PackageCertificateKeyFile />
+    <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
+    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+    <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+    <GenerateTestArtifacts>True</GenerateTestArtifacts>
+    <AppxBundle>Always</AppxBundle>
+    <AppxBundlePlatforms>x64</AppxBundlePlatforms>
+    <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -185,6 +193,7 @@
     <Content Include="Assets\Wide310x150Logo.scale-125.png" />
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
+    <None Include="Package.StoreAssociation.xml" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

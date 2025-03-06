@@ -16,7 +16,7 @@
   <mp:PhoneIdentity PhoneProductId="b485d1c2-dfb7-4b65-9210-8a6bd0321a68" PhonePublisherId="68C2D20A-96CA-43CC-A323-A549C2786CDA"/>
 
   <Properties>
-    <DisplayName>Oberon</DisplayName>
+    <DisplayName>Oberon Remote Input</DisplayName>
     <PublisherDisplayName>SamsidParty</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -38,7 +38,7 @@
         DisplayName="Oberon"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="Oberon"
+        Description="Remote input for Xbox consoles"
         BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" ShortName="Oberon" Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png"  BackgroundColor="#2F2E2E"/>
