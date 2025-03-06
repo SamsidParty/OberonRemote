@@ -42,6 +42,11 @@
         <Button IsEnabled="{x:Bind InteractionEnabled}" Click="AddRemote" Content="+ Add Remote" Margin="36,0,0,36" VerticalAlignment="Bottom" FontFamily="Bahnschrift Light" Height="37" Width="126" FontSize="16"/>
         <ProgressRing x:Name="loadingRing" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="178,0,0,45"/>
 
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,36,28">
+            <Image Height="37" Width="37" Source="/Assets/SmallTile.scale-400.png" />
+            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" Text=" Oberon" Height="Auto" Width="Auto" FontFamily="Bahnschrift SemiBold" FontSize="20"/>
+        </StackPanel>
+        
         <ContentDialog x:Name="addRemoteDialog"
                        Title="Add New Remote"
                        PrimaryButtonText="Add"
