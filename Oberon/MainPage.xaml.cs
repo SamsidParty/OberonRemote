@@ -54,6 +54,21 @@ namespace Oberon
         {
             if (loadingRing.IsActive) { return; }
 
+            // Limit to 4 paired remotes
+            if (Settings.PairedRemotes.Count >= 4)
+            {
+                ContentDialog dialog = new ContentDialog
+                {
+                    Content = "You may only have a maximum of 4 remotes paired at a time, please unpair one to continue.",
+                    Title = "Remote Limit Reached",
+                    PrimaryButtonText = "Ok"
+                };
+
+                DialogSemaphore.ShowContentDialogInSemaphore(dialog);
+
+                return;
+            }
+
             remoteIP.Text = ""; // Clear text
             DialogSemaphore.ShowContentDialogInSemaphore(addRemoteDialog);
         }
