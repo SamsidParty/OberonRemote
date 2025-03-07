@@ -11,7 +11,7 @@
   <Identity
     Name="55968SamsidGameStudios.OberonRemoteInput"
     Publisher="CN=68C2D20A-96CA-43CC-A323-A549C2786CDA"
-    Version="1.0.0.0" />
+    Version="1.0.1.0" />
 
   <mp:PhoneIdentity PhoneProductId="b485d1c2-dfb7-4b65-9210-8a6bd0321a68" PhonePublisherId="68C2D20A-96CA-43CC-A323-A549C2786CDA"/>
 

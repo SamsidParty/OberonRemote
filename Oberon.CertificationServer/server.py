@@ -13,7 +13,7 @@ async def handler(websocket):
         pass
 
 async def main():
-    async with serve(handler, "192.168.100.8", 26401) as server:
+    async with serve(handler, "0.0.0.0", 26401) as server:
         await server.serve_forever()
 
 if __name__ == "__main__":
