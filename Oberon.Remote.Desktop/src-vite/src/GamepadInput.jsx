@@ -2,6 +2,7 @@
 var loopStarted = false;
 
 window.addEventListener("gamepadconnected", (e) => {
+    !!window.rerender ? window.rerender() : console.log(0);
 
     if (!loopStarted) {
         loopStarted = true;
@@ -11,6 +12,10 @@ window.addEventListener("gamepadconnected", (e) => {
     console.log("Gamepad" + e.gamepad.index + " has connected");
 });
 
+
+window.addEventListener("gamepaddisconnected", (e) => {
+    !!window.rerender ? window.rerender() : console.log(0);
+});
 
 function GamepadLoop() {
     loopStarted = true;

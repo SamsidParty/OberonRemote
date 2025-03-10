@@ -1,13 +1,19 @@
-import { useState } from 'react'
-import './App.css'
-import "./GamepadInput.jsx"
+import { useState } from "react";
+import "./App.css";
+import "./GamepadInput.jsx";
+import GamepadPreview from "./components/GamepadPreview.jsx";
+
 
 function App() {
-  return (
-    <>
-      <h1>Oberon</h1>
-    </>
-  )
+
+    var [renderID, setRenderID] = useState(0);
+    window.rerender = () => setRenderID(renderID + 1);
+
+    return (
+        <>
+            <GamepadPreview></GamepadPreview>
+        </>
+    );
 }
 
-export default App
+export default App;

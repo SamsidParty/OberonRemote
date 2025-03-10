@@ -18,7 +18,8 @@ namespace Oberon.Remote.Desktop
 
             var mainWindow =
                 WebWindow.Create()
-                .WithTitle("Hello, world")
+                .WithTitle("Oberon Remote")
+                .WithBounds(new LockedWindowBounds(400, 640))
                 .Show();
 
             app.Run();
