@@ -1,5 +1,9 @@
 import Orb from "./Orb.jsx";
 
+function IsControllerConnected() {
+    return GetControllerType() != "Missing";
+}
+
 function GetControllerType() {
 
     var primaryGamepad = null;
@@ -25,14 +29,17 @@ function GetControllerImage() {
 
 export default function GamepadPreview() {
     return (
-        <div className="gamepadPreview">
-            <Orb
-                hoverIntensity={0}
-                rotateOnHover={true}
-                hue={0}
-                forceHoverState={false}
-            />
-            <img src={GetControllerImage()}></img>
-        </div>
+        <>
+            <div className="gamepadPreview">
+                <Orb
+                    hoverIntensity={0}
+                    rotateOnHover={true}
+                    hue={0}
+                    forceHoverState={false}
+                />
+                <img src={GetControllerImage()}></img>
+            </div>
+            <h1 className="controllerStatus">Controller: {IsControllerConnected() ? "Connected" : "Disconnected"}</h1>
+        </>
     )
 }

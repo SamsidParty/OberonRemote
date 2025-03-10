@@ -6,6 +6,19 @@ body {
     height: 100vh;
 }
 
+* {
+    user-select: none;
+    -webkit-user-drag: none;
+
+    --col-text: black;
+}
+
+@media (prefers-color-scheme: dark) {
+    * {
+        --col-text: white;
+    }
+} 
+
 .gamepadPreview, .gamepadPreview div {
     width: 100%;
     height: 50vh;
@@ -25,4 +38,11 @@ body {
     top: 50%;
     transform: translate(-50%,-50%);
     filter: drop-shadow(0 0 1rem rgba(0, 0, 0, 0.473));
+}
+
+h1 {
+    color: var(--col-text);
+    font-family: monospace;
+    text-align: center;
+    font-size: 1.3rem;
 }
