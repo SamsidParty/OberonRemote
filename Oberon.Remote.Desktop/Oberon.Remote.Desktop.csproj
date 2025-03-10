@@ -1,11 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="src-vite\public\favicon.ico" />
+  </ItemGroup>
 
 	<!-- IgniteView -->
 	<ItemGroup>
@@ -21,6 +25,8 @@
 		<ScriptsURL>https://raw.githubusercontent.com/SamsidParty/IgniteView/refs/heads/main/IgniteView.Scripts</ScriptsURL>
 		<PreBuildCommand>node -e "fetch('$(ScriptsURL)/Prebuild.js').then((c) =&gt; c.text().then(eval))" "$(ScriptsURL)" "$(MSBuildProjectDirectory.Replace('\', '\\'))" "$(Configuration)" "$(JSFramework)"</PreBuildCommand>
 		<PostBuildCommand>node -e "fetch('$(ScriptsURL)/Postbuild.js').then((c) =&gt; c.text().then(eval))" "$(ScriptsURL)" "$(MSBuildProjectDirectory.Replace('\', '\\'))" "$(Configuration)" "$(JSFramework)"</PostBuildCommand>
+		<AssemblyName>Oberon Remote</AssemblyName>
+		<ApplicationIcon>src-vite\public\favicon.ico</ApplicationIcon>
 	</PropertyGroup>
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
 		<Exec Command="$(PreBuildCommand) &quot;$(OutputPath.Replace('\', '\\'))&quot;" />
