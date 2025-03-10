@@ -31,6 +31,11 @@ Example:
 
 [Dualsense Controller]  <---Bluetooth--->  [PC Acting As Input Server]  <---Wi-Fi--->  [Xbox]
 
+# Disclaimer ⚠️
+
+Some apps and games may not work properly with Oberon Remote Input. Apps are able to detect and block synthetic inputs so there's no guarantee that everything will work smoothly in all situations.
+
+
 # Setup Instructions ⚒️
 
 ## 1. Install On Your Console
