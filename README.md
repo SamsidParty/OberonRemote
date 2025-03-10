@@ -36,8 +36,22 @@ Example:
 ## 1. Install On Your Console
 
   - Retail  mode: Install from the [Microsoft Store](https://apps.microsoft.com/detail/9pk5stjzff3s?cid=DevShareMCLPCB&hl=en-US&gl=QA)
-  - Dev mode: Install the latest MSIX release (still working on it)
+  - Dev mode: Install the latest [MSIX release](https://github.com/SamsidParty/OberonRemote/releases/latest/download/Oberon.Msixbundle)
 
 ## 2. Install The Remote (Input Server)
-  - Windows: Download the latest release 
+  - Windows:
+    - Download the latest [release](https://github.com/SamsidParty/OberonRemote/releases/latest/download/Oberon.Remote.Windows.zip) ([virustotal report](https://www.virustotal.com/gui/file/9edaf1d7a07505b25d781bee5dd3bd2fbddb5bb3cd0ca1e6e92154782535efc6))
+    - Extract to a semi-permanent location (the app is portable, currently no installer)
+    - You may have to install the .NET runtime, Visual C++ redistributables, and the webview2 runtime
+    - Run `Oberon Remote.exe`, and allow it through your firewall
   - Android, macOS, and Linux coming soon
+
+## 3. Pair The Remote With Your Xbox
+- The IP address of the remote will be shown at the top of the app, you must input this on the console
+- The pairing will not work unless both devices are on **exactly** the same network, if it still doesn't work try disabling the firewall
+- Once pairing completes, you will see your device's name on the console, and you can press on it to connect
+
+## 4. Connect Your Controller
+- Oberon Remote supports a wide range of different controller types
+- You can connect using bluetooth or USB
+- You may have to press a few buttons on your controller before Oberon Remote detects it
