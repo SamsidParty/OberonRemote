@@ -48,7 +48,10 @@ Some apps and games may not work properly with Oberon Remote Input. Apps are abl
     - Extract to a semi-permanent location (the app is portable, currently no installer)
     - You may have to install the .NET runtime, Visual C++ redistributables, and the webview2 runtime
     - Run `Oberon Remote.exe`, and allow it through your firewall
-  - Android, macOS, and Linux coming soon
+  - Android:
+    - Download the latest [release](https://github.com/SamsidParty/OberonRemote/releases/latest/download/Oberon.Remote.Android.apk)
+    - Install the APK file, you may have to enable sideloading
+    - Open the app, if your controller isn't detected, try closing the app and reopening it after connecting the controller
 
 ## 3. Pair The Remote With Your Xbox
 - The IP address of the remote will be shown at the top of the app, you must input this on the console
