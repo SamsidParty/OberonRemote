@@ -5,23 +5,64 @@ using UnityEngine.InputSystem;
 
 public class UnityInputModule : InputModule
 {
+
+    void InsertInputBytes(byte[] bytes, int offset, Gamepad gamepad)
+    {
+        bytes[offset] = 0xFF;
+        InsertUInt16(bytes, 1 + offset, Mathf.FloorToInt(gamepad.leftStick.x.value * 32767));
+        InsertUInt16(bytes, 3 + offset, Mathf.FloorToInt(gamepad.leftStick.y.value * -32767));
+        InsertUInt16(bytes, 5 + offset, Mathf.FloorToInt(gamepad.rightStick.x.value * 32767));
+        InsertUInt16(bytes, 7 + offset, Mathf.FloorToInt(gamepad.rightStick.y.value * -32767));
+        InsertUInt16(bytes, 9 + offset, Mathf.FloorToInt(gamepad.leftTrigger.value * 32767));
+        InsertUInt16(bytes, 11 + offset, Mathf.FloorToInt(gamepad.rightTrigger.value * 32767));
+
+        var buttonGroup1 = new bool[] { gamepad.buttonSouth.isPressed, gamepad.buttonEast.isPressed, gamepad.buttonWest.isPressed, gamepad.buttonNorth.isPressed, gamepad.leftShoulder.isPressed, gamepad.rightShoulder.isPressed, gamepad.startButton.isPressed, gamepad.selectButton.isPressed };
+        var buttonGroup2 = new bool[] { false, gamepad.leftStickButton.isPressed, gamepad.rightStickButton.isPressed, gamepad.dpad.up.isPressed, gamepad.dpad.down.isPressed, gamepad.dpad.left.isPressed, gamepad.dpad.right.isPressed, false };
+
+        bytes[13 + offset] = GenerateButtonGroup(buttonGroup1);
+        bytes[14 + offset] = GenerateButtonGroup(buttonGroup2);
+    }
+
+    void InsertNullInputBytes(byte[] bytes, int offset)
+    {
+        bytes[offset] = 0xFF;
+        InsertUInt16(bytes, 1 + offset, 0);
+        InsertUInt16(bytes, 3 + offset, 0);
+        InsertUInt16(bytes, 5 + offset, 0);
+        InsertUInt16(bytes, 7 + offset, 0);
+        InsertUInt16(bytes, 9 + offset, 0);
+        InsertUInt16(bytes, 11 + offset, 0);
+
+        bytes[13 + offset] = 0;
+        bytes[14 + offset] = 0;
+    }
+
     public void ProcessInput()
     {
         var gamepad = Gamepad.current;
         var bytes = CurrentControllerState;
 
-        InsertUInt16(bytes, 1, Mathf.FloorToInt(gamepad.leftStick.x.value * 32767));
-        InsertUInt16(bytes, 3, Mathf.FloorToInt(gamepad.leftStick.y.value * -32767));
-        InsertUInt16(bytes, 5, Mathf.FloorToInt(gamepad.rightStick.x.value * 32767));
-        InsertUInt16(bytes, 7, Mathf.FloorToInt(gamepad.rightStick.y.value * -32767));
-        InsertUInt16(bytes, 9, Mathf.FloorToInt(gamepad.leftTrigger.value * 32767));
-        InsertUInt16(bytes, 11, Mathf.FloorToInt(gamepad.rightTrigger.value * 32767));
+        for (int i = 0; i < Gamepad.all.Count; i++)
+        {
+            if (i >= 4) // Max 4 Gamepads
+            {
+                break;
+            }
 
-        var buttonGroup1 = new bool[] { gamepad.buttonSouth.isPressed, gamepad.buttonEast.isPressed, gamepad.buttonWest.isPressed, gamepad.buttonNorth.isPressed, gamepad.leftShoulder.isPressed, gamepad.rightShoulder.isPressed, gamepad.startButton.isPressed, gamepad.selectButton.isPressed };
-        var buttonGroup2 = new bool[] { false, gamepad.leftStickButton.isPressed, gamepad.rightStickButton.isPressed, gamepad.dpad.up.isPressed, gamepad.dpad.down.isPressed, gamepad.dpad.left.isPressed, gamepad.dpad.right.isPressed, false };
+            if (Gamepad.all[i] == null)
+            {
+                InsertNullInputBytes(bytes, i * 25);
+                continue;
+            }
+            InsertInputBytes(bytes, i * 25, Gamepad.all[i]);
+        }
 
-        bytes[13] = GenerateButtonGroup(buttonGroup1);
-        bytes[14] = GenerateButtonGroup(buttonGroup2);
+        UpdateStatus();
+    }
+
+    void UpdateStatus()
+    {
+        ServerStatus.CurrentStatus.ConnectedControllerCount = Gamepad.all.Count;
     }
 
     #region Helpers

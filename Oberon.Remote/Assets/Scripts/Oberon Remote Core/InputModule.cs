@@ -8,7 +8,7 @@ namespace Oberon.Remote.Core
 {
     public class InputModule
     {
-        public byte[] CurrentControllerState = new byte[20];
+        public byte[] CurrentControllerState = new byte[100];
 
         public InputModule()
         {
