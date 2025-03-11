@@ -5,16 +5,30 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+	  <IsWindows Condition="$(Configuration.Contains('Windows'))">true</IsWindows>
+	  <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</IsLinux>
+	  <IsMac Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</IsMac>
+	  <Configurations>Debug;Release;Windows Debug;Windows Release</Configurations>
   </PropertyGroup>
 
-  <ItemGroup>
+	<PropertyGroup Condition="'$(IsWindows)'=='true'">
+		<TargetFramework>net9.0-windows10.0.19041</TargetFramework>
+		<DefineConstants>Windows</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(IsLinux)'=='true'">
+		<DefineConstants>Linux</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(IsMac)'=='true'">
+		<DefineConstants>MacOS</DefineConstants>
+	</PropertyGroup>
+
+	<ItemGroup>
     <Content Include="src-vite\public\favicon.ico" />
   </ItemGroup>
 
 	<!-- IgniteView -->
 	<ItemGroup>
 		<PackageReference Include="IgniteView.Desktop" Version="*" />
-		<PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.2.1105" />
 		<PackageReference Include="Rssdp" Version="4.0.4" />
 		<PackageReference Include="Fleck" Version="1.2.0" />
 		<PackageReference Include="System.ServiceModel.Primitives" Version="8.1.1" />

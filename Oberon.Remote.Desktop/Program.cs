@@ -13,7 +13,7 @@ namespace Oberon.Remote.Desktop
         static void Main(string[] args)
         {
             SocketServer = new SocketServer();
-            InputModule = new JSInputModule();
+            InputModule = new WGIInputModule();
 
             DesktopPlatformManager.Activate();
             var app = new ViteAppManager();
