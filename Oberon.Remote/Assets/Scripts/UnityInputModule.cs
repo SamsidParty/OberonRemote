@@ -39,7 +39,6 @@ public class UnityInputModule : InputModule
 
     public void ProcessInput()
     {
-        var gamepad = Gamepad.current;
         var bytes = CurrentControllerState;
 
         for (int i = 0; i < Gamepad.all.Count; i++)

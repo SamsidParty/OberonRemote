@@ -10,6 +10,7 @@ public class OberonStatusUI : MonoBehaviour
 {
     public Text IPText;
     public Text ControllerText;
+    public Text StickDebugText;
 
     public ControllerPreview[] ControllerTextures;
     public Image ControllerImage;
@@ -48,6 +49,11 @@ public class OberonStatusUI : MonoBehaviour
         {
             LastControllerImage = CurrentControllerImage;
             ControllerImage.sprite = ControllerTextures.Where((t) => t.ControllerType == CurrentControllerImage).First().Texture;
+        }
+
+        if (StickDebugText.gameObject.activeInHierarchy && Gamepad.current != null)
+        {
+            StickDebugText.text = "" + Gamepad.current.leftStick.value.ToString() + ", " + Gamepad.current.rightStick.value.ToString();
         }
     }
 }

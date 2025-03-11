@@ -56,7 +56,7 @@ namespace Oberon.Remote.Core
                     };
 
                     // Send the handshake packet
-                    var machineName = Encoding.UTF8.GetBytes(Environment.MachineName);
+                    var machineName = Encoding.UTF8.GetBytes(ServerStatus.CurrentStatus.MachineName);
                     var machineNamePacket = new byte[machineName.Length + 1];
                     machineNamePacket[0] = 0xA; // Identifies the packet as the handshake packet
                     machineName.CopyTo(machineNamePacket, 1);

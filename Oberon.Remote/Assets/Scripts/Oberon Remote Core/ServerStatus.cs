@@ -13,6 +13,8 @@ namespace Oberon.Remote.Core
         public string ListenIP => SocketServer.GetListenIP();
         public string InputModuleType => OberonManager.InputModule.GetType().Name;
 
+        public string MachineName;
+
         public int ConnectedControllerCount;
     }
 }
