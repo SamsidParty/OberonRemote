@@ -10,6 +10,7 @@ namespace Oberon.Remote.Desktop
     public class ServerStatus
     {
         public string ListenIP => SocketServer.GetListenIP();
+        public string InputModuleType => Program.InputModule.GetType().Name;
 
         [Command("getServerStatus")]
         public static ServerStatus GetServerStatus()

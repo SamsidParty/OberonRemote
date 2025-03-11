@@ -18,13 +18,6 @@ namespace Oberon.Remote.Desktop
         WebSocketServer Server;
 
         SynchronizedCollection<CommanderClient> Connections = new SynchronizedCollection<CommanderClient>();
-        static byte[] CurrentControllerState = new byte[20];
-
-        [Command("forwardInput")]
-        public static void ForwardInput(string input)
-        {
-            CurrentControllerState = Convert.FromBase64String(input);
-        }
 
         // https://stackoverflow.com/a/27376368
         public static string GetListenIP()
@@ -39,8 +32,6 @@ namespace Oberon.Remote.Desktop
 
         public SocketServer()
         {
-            CurrentControllerState[0] = 0xFF;
-
             var t = new Thread(Start);
             t.Start();
         }
@@ -60,7 +51,7 @@ namespace Oberon.Remote.Desktop
                     {
                         if (data[0] == 0xFA) // Request the current controller packet
                         {
-                            socket.Send(CurrentControllerState); // Send the latest controller packet
+                            socket.Send(Program.InputModule.CurrentControllerState); // Send the latest controller packet
                         }
                     };
 

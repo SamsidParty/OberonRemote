@@ -7,11 +7,13 @@ namespace Oberon.Remote.Desktop
     internal class Program
     {
         public static SocketServer SocketServer;
+        public static InputModule InputModule;
 
         [STAThread]
         static void Main(string[] args)
         {
             SocketServer = new SocketServer();
+            InputModule = new JSInputModule();
 
             DesktopPlatformManager.Activate();
             var app = new ViteAppManager();

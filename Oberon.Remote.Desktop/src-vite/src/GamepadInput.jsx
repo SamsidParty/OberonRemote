@@ -29,6 +29,8 @@ function GamepadLoop() {
 }
 
 function SendControlPacket(gamepad) {
+    if (window.serverStatus.InputModuleType != "JSInputModule") { return; }
+
     var buffer = new ArrayBuffer(20);
     var packet = new DataView(buffer);
 

@@ -4,7 +4,8 @@ import "./GamepadInput.jsx";
 import GamepadPreview from "./components/GamepadPreview.jsx";
 
 window.serverStatus = {
-    ListenIP: "..."
+    ListenIP: "...",
+    InputModuleType: "None"
 }
 
 async function UpdateStatus() {

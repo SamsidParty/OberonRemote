@@ -14,6 +14,7 @@
 	<!-- IgniteView -->
 	<ItemGroup>
 		<PackageReference Include="IgniteView.Desktop" Version="*" />
+		<PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.2.1105" />
 		<PackageReference Include="Rssdp" Version="4.0.4" />
 		<PackageReference Include="Fleck" Version="1.2.0" />
 		<PackageReference Include="System.ServiceModel.Primitives" Version="8.1.1" />
@@ -27,6 +28,7 @@
 		<PostBuildCommand>node -e "fetch('$(ScriptsURL)/Postbuild.js').then((c) =&gt; c.text().then(eval))" "$(ScriptsURL)" "$(MSBuildProjectDirectory.Replace('\', '\\'))" "$(Configuration)" "$(JSFramework)"</PostBuildCommand>
 		<AssemblyName>Oberon Remote</AssemblyName>
 		<ApplicationIcon>src-vite\public\favicon.ico</ApplicationIcon>
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 	</PropertyGroup>
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
 		<Exec Command="$(PreBuildCommand) &quot;$(OutputPath.Replace('\', '\\'))&quot;" />
