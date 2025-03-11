@@ -165,7 +165,7 @@ PlayerSettings:
   androidMinAspectRatio: 1
   applicationIdentifier:
     Android: com.SamsidParty.OberonRemote
-    Standalone: com.DefaultCompany.2D-URP
+    Standalone: com.SamsidParty.OberonRemote
   buildNumber:
     Standalone: 0
     VisionOS: 0
