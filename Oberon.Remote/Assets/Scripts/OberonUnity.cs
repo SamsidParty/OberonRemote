@@ -11,6 +11,13 @@ public class OberonUnity : MonoBehaviour
 
     private void Awake()
     {
+        
+        #if UNITY_ANDROID || UNITY_IOS
+        Application.targetFrameRate = 120;
+        #else 
+        Application.targetFrameRate = -1; // Disables Vsync
+        #endif
+
         if (Instance != null)
         {
             Destroy(gameObject);
