@@ -27,9 +27,13 @@
 To use Oberon, you need an extra device on the same local network as your Xbox console. This device is referred to as the "remote" or the "input server". 
 It takes inputs from your controller, (eg. a Dualsense), and sends it to your Xbox with websockets.
 
-Example:
+![image](https://github.com/user-attachments/assets/2476ba6a-29ad-4626-8135-a43bef0b3dc8)
 
-[Dualsense Controller]  <---Bluetooth--->  [PC Acting As Input Server]  <---Wi-Fi--->  [Xbox]
+
+# Disclaimer ⚠️
+
+Some apps and games may not work properly with Oberon Remote Input. Apps are able to detect and block synthetic inputs so there's no guarantee that everything will work smoothly in all situations.
+
 
 # Setup Instructions ⚒️
 
