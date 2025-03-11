@@ -1,4 +1,5 @@
 using Oberon.Remote.Core;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -23,5 +24,11 @@ public class OberonUnity : MonoBehaviour
     private void Update()
     {
         InputModule.ProcessInput();
+    }
+
+    private void OnDestroy()
+    {
+        OberonManager.SocketServer.Stop();
+        Process.GetCurrentProcess().Kill();
     }
 }

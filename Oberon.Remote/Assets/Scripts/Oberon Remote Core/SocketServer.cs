@@ -14,6 +14,7 @@ namespace Oberon.Remote.Core
 {
     public class SocketServer
     {
+        Thread ServerThread;
         WebSocketServer Server;
 
         SynchronizedCollection<CommanderClient> Connections = new SynchronizedCollection<CommanderClient>();
@@ -31,8 +32,8 @@ namespace Oberon.Remote.Core
 
         public SocketServer()
         {
-            var t = new Thread(Start);
-            t.Start();
+            ServerThread = new Thread(Start);
+            ServerThread.Start();
         }
 
         void Start()
@@ -63,6 +64,18 @@ namespace Oberon.Remote.Core
                 };
                 socket.OnError = (_) => { };
             });
+        }
+
+
+        public void Stop()
+        {
+            if (ServerThread != null)
+            {
+                Server.Dispose();
+                ServerThread.Abort();
+                ServerThread = null;
+                Server = null;
+            }
         }
     }
 }
