@@ -52,6 +52,11 @@ Some apps and games may not work properly with Oberon Remote Input. Apps are abl
     - Download the latest [release](https://github.com/SamsidParty/OberonRemote/releases/latest/download/Oberon.Remote.Android.apk)
     - Install the APK file, you may have to enable sideloading
     - Open the app, if your controller isn't detected, try closing the app and reopening it after connecting the controller
+  - Linux:
+    - Download the latest [release](https://github.com/SamsidParty/OberonRemote/releases/latest/download/Oberon.Remote.Linux.zip)
+    - Extract to a semi-permanent location (the app is portable, currently no installer)
+    - Run `chmod +x "./Oberon Remote.x86_64"` in the folder where you extracted the file
+    - Run `"./Oberon Remote.x86_64"` to execute the app
   - Mac:
     - You have to run the following command in your terminal, since this app isn't officially notarized by Apple:
       
