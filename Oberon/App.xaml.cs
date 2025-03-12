@@ -30,8 +30,8 @@ namespace Oberon
         public static App Instance;
 
         public SocketClient Client;
-        public InputForwarder InputInjector;
         public Persistence Persistence;
+        public InputForwarder[] InputInjectors = new InputForwarder[4];
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -56,7 +56,6 @@ namespace Oberon
         async void InitServices()
         {
             Persistence = new Persistence();
-            InputInjector = new InputForwarder();
         }
 
         /// <summary>

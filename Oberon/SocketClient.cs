@@ -25,7 +25,7 @@ namespace Oberon
 
         async void Start(string host)
         {
-            InputForwarder.Instance.Reset();
+            InputForwarder.ResetAll();
             Client = new ClientWebSocket();
 
             try
@@ -33,11 +33,12 @@ namespace Oberon
                 await Client.ConnectAsync(new Uri(host), CancellationToken.None);
 
                 byte[] buffer = new byte[256];
-                byte[] requestPacket = new byte[] { 0xFA };
+                byte[] requestPacket = new byte[] { 0xFA, 0, 0, 0, 0, 0, 0, 0, 0 };
 
                 while (Client.State == WebSocketState.Open)
                 {
                     await Client.SendAsync(requestPacket, WebSocketMessageType.Binary, true, CancellationToken.None);
+
                     var result = await Client.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
                     if (result.MessageType == WebSocketMessageType.Close)
                     {
@@ -66,7 +67,7 @@ namespace Oberon
 
         void OnClose(object sender, EventArgs e)
         {
-            InputForwarder.Instance.Reset();
+            InputForwarder.ResetAll();
             App.Instance.Client = null;
             GC.Collect();
 
@@ -88,7 +89,16 @@ namespace Oberon
             
             if (data[0] == 0xFF) // 0xFF Represents a controller input packet
             {
-                InputForwarder.Instance.InjectInput(data);
+                if (App.Instance.InputInjectors[0] == null)
+                {
+                    App.Instance.InputInjectors[0] = new InputForwarder(); // Init controller 1
+                }
+
+                for (int i = 0; i < App.Instance.InputInjectors.Length; i++)
+                {
+                    if (App.Instance.InputInjectors[i] == null) continue;
+                    App.Instance.InputInjectors[i].InjectInput(data);
+                }
             }
         }
 

@@ -47,7 +47,7 @@ public class OberonUnity : MonoBehaviour
     {
         OberonManager.SocketServer.Stop();
 
-#if UNITY_STANDALONE_WIN
+#if UNITY_STANDALONE_WIN && !UNITY_EDITOR
         Process.GetCurrentProcess().Kill();
 #endif
     }
