@@ -52,6 +52,14 @@ Some apps and games may not work properly with Oberon Remote Input. Apps are abl
     - Download the latest [release](https://github.com/SamsidParty/OberonRemote/releases/latest/download/Oberon.Remote.Android.apk)
     - Install the APK file, you may have to enable sideloading
     - Open the app, if your controller isn't detected, try closing the app and reopening it after connecting the controller
+  - Mac:
+    - You have to run the following command in your terminal, since this app isn't officially notarized by Apple:
+      
+      ```bash
+      curl "https://raw.githubusercontent.com/SamsidParty/OberonRemote/refs/heads/main/Tooling/install_mac.sh" | sudo zsh
+      ```
+        
+      If it is installed succesfully, then Oberon Remote will automatically launch. The app will be copied to your `Applications` folder, so that's where you can uninstall it from.
 
 ## 3. Pair The Remote With Your Xbox
 - The IP address of the remote will be shown at the top of the app, you must input this on the console
