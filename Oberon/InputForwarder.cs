@@ -19,25 +19,7 @@ namespace Oberon
 
         public InjectedInputGamepadInfo GamepadState;
         public bool XboxButtonPressed = false;
-        public Gamepad AssociatedGamepad;
         public int GamepadIndex = 1;
-
-        public byte[] VibrationBytes
-        {
-            get
-            {
-                if (AssociatedGamepad == null) return new byte[4];
-
-                byte[] vibration = new byte[4];
-
-                vibration[0] = (byte)Math.Ceiling(AssociatedGamepad.Vibration.LeftMotor * 255f);
-                vibration[1] = (byte)Math.Ceiling(AssociatedGamepad.Vibration.RightMotor * 255f);
-                vibration[2] = (byte)Math.Ceiling(AssociatedGamepad.Vibration.LeftTrigger * 255f);
-                vibration[3] = (byte)Math.Ceiling(AssociatedGamepad.Vibration.RightTrigger * 255f);
-
-                return vibration;
-            }
-        }
 
         public static void ResetAll()
         {
@@ -50,29 +32,6 @@ namespace Oberon
         }
 
         public InputForwarder() {
-
-            Gamepad.GamepadAdded += (object sender, Gamepad e) =>
-            {
-                // Set a specific magic input that a human can't possible replicate
-                var detectionState = new InjectedInputGamepadInfo();
-                detectionState.LeftTrigger = 0.7;
-                detectionState.RightTrigger = 0.2;
-                Injector.InjectGamepadInput(detectionState);
-
-                // Detect if the gamepad is at that specific value
-                var reading = e.GetCurrentReading();
-                var leftTriggerReading = reading.LeftTrigger;
-                var rightTriggerReading = reading.RightTrigger;
-
-                if (leftTriggerReading > 0.68 && leftTriggerReading < 0.72 && rightTriggerReading > 0.18 && rightTriggerReading < 0.22)
-                {
-                    AssociatedGamepad = e;
-                }
-
-                Update(); // Reset internal gamepad state
-            };
-
-
             Injector = InputInjector.TryCreate();
             Injector.InitializeGamepadInjection();
             GamepadState = new InjectedInputGamepadInfo();
@@ -146,10 +105,6 @@ namespace Oberon
 
         public void Update()
         {
-            if (AssociatedGamepad == null) { return; }
-
-            Debug.WriteLine(VibrationBytes[0] + " " + VibrationBytes[1] + " " + VibrationBytes[2] + " " + VibrationBytes[3]);
-
             Injector.InjectGamepadInput(GamepadState);
         }
 

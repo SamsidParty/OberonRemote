@@ -33,7 +33,7 @@ namespace Oberon
                 await Client.ConnectAsync(new Uri(host), CancellationToken.None);
 
                 byte[] buffer = new byte[256];
-                byte[] requestPacket = new byte[] { 0xFA, 0, 0, 0, 0, 0, 0, 0, 0 };
+                byte[] requestPacket = new byte[] { 0xFA };
 
                 while (Client.State == WebSocketState.Open)
                 {

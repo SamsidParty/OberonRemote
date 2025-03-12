@@ -225,9 +225,6 @@
     <PackageReference Include="Rssdp">
       <Version>4.0.4</Version>
     </PackageReference>
-    <PackageReference Include="Watson">
-      <Version>6.3.5</Version>
-    </PackageReference>
     <PackageReference Include="websocketsharp.core">
       <Version>1.0.1</Version>
     </PackageReference>
