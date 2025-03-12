@@ -76,3 +76,13 @@ Some apps and games may not work properly with Oberon Remote Input. Apps are abl
 - Oberon Remote supports a wide range of different controller types
 - You can connect using bluetooth or USB
 - You may have to press a few buttons on your controller before Oberon Remote detects it
+
+## 5. Preventing Interruptions
+- If you are using the mobile remote, you must keep the app open in the foreground. Putting your device to sleep or switching apps will disconnect the remote.
+- If you are using the remote on a computer, you must also keep the remote window in the foreground, minimizing it will increase the input latency and may cause malfunctions.
+
+- If you want to turn off your Xbox controller when using the remote, do *NOT* hold the Xbox button and turn off controller, this will disconnect the remote
+![image](https://github.com/user-attachments/assets/72c6c037-1e7f-4b9f-9464-b8e0bce5e420)
+
+- Instead, just take the batteries out of your controller, this will prevent the remote from disconnecting.
+If you have an elite controller without batteries, simply hold the Xbox button for 10 seconds, that will force shutdown the controller.
