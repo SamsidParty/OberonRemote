@@ -62,13 +62,17 @@ Some apps and games may not work properly with Oberon Remote Input. Apps are abl
       If it is installed succesfully, then Oberon Remote will automatically launch. The app will be copied to your `Applications` folder, so that's where you can uninstall it from.
 
 ## 3. Pair The Remote With Your Xbox
-- On the Xbox, open the Oberon app and press "+ Add Remote"  
+- On the Xbox, open the Oberon app and press "Add Remote"  
 ![image](https://github.com/user-attachments/assets/f6a45b09-7aaa-44c4-92e4-42b55ff55e86)
+
 - The IP address of the remote will be shown at the top of the app, you must input this on the console
 ![image](https://github.com/user-attachments/assets/d986e2f9-2c2c-40a3-8862-643df535f86f)
+
 - The pairing will not work unless both devices are on **exactly** the same network, if it still doesn't work try disabling the firewall
+  
 - Once pairing completes, you will see your device's name on the console, press `A` while it is selected to connect to it
   ![image](https://github.com/user-attachments/assets/1e823e27-91eb-4cdd-b2a7-93582ff0b2b4)
+  
 - If the connection works, you will see a notification that the connection was successful
 ![image](https://github.com/user-attachments/assets/966f3295-23fe-48a2-89d8-6a6721ebe5e8)
 
