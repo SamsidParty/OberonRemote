@@ -94,10 +94,40 @@ namespace Oberon
                     App.Instance.InputInjectors[0] = new InputForwarder(); // Init controller 1
                 }
 
+                if (data[25] == 0xFF && App.Instance.InputInjectors[1] == null)
+                {
+                    App.Instance.InputInjectors[1] = new InputForwarder(); // Init controller 2
+                }
+                else if (data[25] != 0xFF && App.Instance.InputInjectors[1] != null)
+                {
+                    App.Instance.InputInjectors[1].Reset(); // Delete controller 2
+                    App.Instance.InputInjectors[1] = null;
+                }
+
+                if (data[50] == 0xFF && App.Instance.InputInjectors[2] == null)
+                {
+                    App.Instance.InputInjectors[2] = new InputForwarder(); // Init controller 3
+                }
+                else if (data[50] != 0xFF && App.Instance.InputInjectors[2] != null)
+                {
+                    App.Instance.InputInjectors[2].Reset(); // Delete controller 3
+                    App.Instance.InputInjectors[2] = null;
+                }
+
+                if (data[75] == 0xFF && App.Instance.InputInjectors[3] == null)
+                {
+                    App.Instance.InputInjectors[3] = new InputForwarder(); // Init controller 4
+                }
+                else if (data[75] != 0xFF && App.Instance.InputInjectors[3] != null)
+                {
+                    App.Instance.InputInjectors[3].Reset(); // Delete controller 4
+                    App.Instance.InputInjectors[3] = null;
+                }
+
                 for (int i = 0; i < App.Instance.InputInjectors.Length; i++)
                 {
                     if (App.Instance.InputInjectors[i] == null) continue;
-                    App.Instance.InputInjectors[i].InjectInput(data);
+                    App.Instance.InputInjectors[i].InjectInput(data, i * 25);
                 }
             }
         }

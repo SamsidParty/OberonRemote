@@ -34,7 +34,7 @@ public class OberonStatusUI : MonoBehaviour
 
             CurrentControllerImage = "Generic";
 
-            if (Gamepad.current.displayName.ToLower().Contains("dualsense"))
+            if (Gamepad.current?.displayName.ToLower().Contains("dualsense") ?? false)
             {
                 CurrentControllerImage = "PS5";
             }

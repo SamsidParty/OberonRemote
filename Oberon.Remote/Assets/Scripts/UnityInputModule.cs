@@ -25,37 +25,29 @@ public class UnityInputModule : InputModule
 
     void InsertNullInputBytes(byte[] bytes, int offset)
     {
-        bytes[offset] = 0xFF;
-        InsertUInt16(bytes, 1 + offset, 0);
-        InsertUInt16(bytes, 3 + offset, 0);
-        InsertUInt16(bytes, 5 + offset, 0);
-        InsertUInt16(bytes, 7 + offset, 0);
-        InsertUInt16(bytes, 9 + offset, 0);
-        InsertUInt16(bytes, 11 + offset, 0);
-
-        bytes[13 + offset] = 0;
-        bytes[14 + offset] = 0;
+        for (int i = 0; i < 24; i++)
+        {
+            bytes[offset + i] = 0;
+        }
     }
 
     public void ProcessInput()
     {
         var bytes = CurrentControllerState;
 
-        for (int i = 0; i < Gamepad.all.Count; i++)
+        for (int i = 0; i < 4; i++)
         {
-            if (i >= 4) // Max 4 Gamepads
-            {
-                break;
-            }
-
-            if (Gamepad.all[i] == null)
+            if (i >= Gamepad.all.Count || Gamepad.all[i] == null)
             {
                 InsertNullInputBytes(bytes, i * 25);
                 continue;
             }
+
             InsertInputBytes(bytes, i * 25, Gamepad.all[i]);
         }
 
+        bytes[0] = 0xFF;
+        CurrentControllerState = bytes;
         UpdateStatus();
     }
 
