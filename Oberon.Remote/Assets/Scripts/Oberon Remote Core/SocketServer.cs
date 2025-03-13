@@ -49,6 +49,12 @@ namespace Oberon.Remote.Core
                     socket.OnClose = () => Connections.Remove(client);
                     socket.OnBinary = (data) =>
                     {
+                        if (Server == null)
+                        {
+                            socket.Close();
+                            return;
+                        }
+
                         if (data[0] == 0xFA) // Request the current controller packet
                         {
                             socket.Send(OberonManager.InputModule.CurrentControllerState); // Send the latest controller packet
@@ -71,6 +77,7 @@ namespace Oberon.Remote.Core
         {
             if (ServerThread != null)
             {
+                Server.ListenerSocket.Close();
                 Server.Dispose();
                 ServerThread.Abort();
                 ServerThread = null;
