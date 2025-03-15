@@ -8,8 +8,10 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Store;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Services.Store;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -99,6 +101,11 @@ namespace Oberon
                 Remotes.Add(remote);
             }
 
+        }
+
+        private void Donate(object sender, RoutedEventArgs e)
+        {
+            CurrentApp.RequestProductPurchaseAsync("donation2");
         }
 
         private void AddRemote(object sender, RoutedEventArgs e)
