@@ -28,7 +28,7 @@
                             </Grid.ColumnDefinitions>
                             <StackPanel Grid.Column="0" Background="{x:Bind Background}" Orientation="Vertical" Margin="0" Padding="0" HorizontalAlignment="Stretch">
                                 <TextBlock FontSize="20" FontFamily="Bahnschrift SemiBold" Text="{x:Bind DisplayName}"/>
-                                <TextBlock FontSize="14" Text="{x:Bind IPAddress}" FontFamily="Cascadia Code"/>
+                                <TextBlock FontSize="14" Text="{x:Bind DisplayAddress}" FontFamily="Cascadia Code"/>
                             </StackPanel>
                             <StackPanel Grid.Column="1" Background="{x:Bind Background}" Orientation="Vertical" Margin="0" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Center">
                                 <TextBlock FontSize="14" VerticalAlignment="Center" Text="{x:Bind ConnectedText}"/>

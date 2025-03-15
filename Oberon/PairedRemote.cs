@@ -42,5 +42,18 @@ namespace Oberon
                 return IsConnected ? new SolidColorBrush((Color)Application.Current.Resources["SystemAccentColor"]) : new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
             }
         }
+
+        [JsonIgnore]
+        public string DisplayAddress
+        {
+            get
+            {
+                var ip = IPAddress.Replace("ws://", "");
+                ip = ip.Replace("wss://", "");
+                ip = ip.Replace(":26401", "");
+                ip = ip.Replace("/", "");
+                return ip;
+            }
+        }
     }
 }
