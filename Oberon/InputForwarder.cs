@@ -15,6 +15,7 @@ namespace Oberon
 {
     public class InputForwarder
     {
+        public static RumbleState[] RumbleValues = new RumbleState[] { new RumbleState(), new RumbleState(), new RumbleState(), new RumbleState() };
         public InputInjector Injector;
 
         public InjectedInputGamepadInfo GamepadState;
@@ -90,6 +91,16 @@ namespace Oberon
                     XboxButtonPressed = true;
                     App.Instance.Persistence.PlayRemoteSound();
                     Injector.InjectShortcut(InjectedInputShortcut.Start);
+
+                    // Vibrate
+                    foreach (var r in RumbleValues) { r.SetAll(255); }
+
+                    // Reset vibrations
+                    Task.Run(async () =>
+                    {
+                        await Task.Delay(50);
+                        foreach (var r in RumbleValues) { r.SetAll(0); }
+                    });
                 }
             }
             else

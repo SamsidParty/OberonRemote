@@ -9,7 +9,7 @@ namespace Oberon.Remote.Core
     public class InputModule
     {
         public byte[] CurrentControllerState = new byte[100];
-        public RumbleState[] RumbleValues;
+        public RumbleState[] RumbleValues = new RumbleState[4];
 
         public InputModule()
         {
