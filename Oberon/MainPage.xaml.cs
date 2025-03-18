@@ -100,7 +100,6 @@ namespace Oberon
             {
                 Remotes.Add(remote);
             }
-
         }
 
         private void Donate(object sender, RoutedEventArgs e)

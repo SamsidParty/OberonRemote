@@ -70,11 +70,7 @@ namespace Oberon
             InputForwarder.ResetAll();
             App.Instance.Client = null;
             GC.Collect();
-
-            if (MainPage.Instance != null)
-            {
-                MainPage.Instance.RefreshSettings();
-            }
+            MainPage.Instance.RefreshSettings();
         }
 
         private void OnMessage(byte[] data)

@@ -55,5 +55,14 @@ namespace Oberon
                 return ip;
             }
         }
+
+        [JsonIgnore]
+        public string Nonce
+        {
+            get
+            {
+                return Guid.NewGuid().ToString();
+            }
+        }
     }
 }
