@@ -43,6 +43,7 @@ public class UnityInputModule : InputModule
                 continue;
             }
 
+            Gamepad.all[i].SetMotorSpeeds(RumbleValues[i].LeftMotor, RumbleValues[i].RightMotor);
             InsertInputBytes(bytes, i * 25, Gamepad.all[i]);
         }
 

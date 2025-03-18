@@ -19,6 +19,8 @@ namespace Oberon.Remote.Core
 
         SynchronizedCollection<CommanderClient> Connections = new SynchronizedCollection<CommanderClient>();
 
+        RumbleState[] RumbleState = new RumbleState[4];
+
         // https://stackoverflow.com/a/27376368
         public static string GetListenIP()
         {
@@ -43,10 +45,12 @@ namespace Oberon.Remote.Core
             {
                 socket.OnOpen = () =>
                 {
+                    ResetRumble();
+
                     var client = new CommanderClient(socket);
                     Connections.Add(client);
 
-                    socket.OnClose = () => Connections.Remove(client);
+                    socket.OnClose = () => { Connections.Remove(client); ResetRumble(); };
                     socket.OnBinary = (data) =>
                     {
                         if (Server == null)
@@ -57,6 +61,18 @@ namespace Oberon.Remote.Core
 
                         if (data[0] == 0xFA) // Request the current controller packet
                         {
+                            if (data.Length == 17) // The packet contains rumble information
+                            {
+                                for (int i = 0; i < 4; i++)
+                                {
+                                    RumbleState[i].LeftMotor = data[(i * 4) + 1];
+                                    RumbleState[i].RightMotor = data[(i * 4) + 2];
+                                    RumbleState[i].LeftTrigger = data[(i * 4) + 3];
+                                    RumbleState[i].RightTrigger = data[(i * 4) + 4];
+                                }
+                            }
+
+                            UpdateRumble();
                             socket.Send(OberonManager.InputModule.CurrentControllerState); // Send the latest controller packet
                         }
                     };
@@ -68,15 +84,26 @@ namespace Oberon.Remote.Core
                     machineName.CopyTo(machineNamePacket, 1);
                     socket.Send(machineNamePacket);
                 };
-                socket.OnError = (_) => { };
+                socket.OnError = (_) => { ResetRumble(); };
             });
         }
 
+        void UpdateRumble()
+        {
+            OberonManager.InputModule.RumbleValues = RumbleState;
+        }
+
+        void ResetRumble()
+        {
+            RumbleState = new RumbleState[4];
+            UpdateRumble();
+        }
 
         public void Stop()
         {
             if (ServerThread != null)
             {
+                ResetRumble();
                 Server.ListenerSocket.Close();
                 Server.Dispose();
                 ServerThread.Abort();
