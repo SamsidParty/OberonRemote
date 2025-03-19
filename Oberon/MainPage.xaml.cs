@@ -102,9 +102,9 @@ namespace Oberon
             }
         }
 
-        private void Donate(object sender, RoutedEventArgs e)
+        private async void Donate(object sender, RoutedEventArgs e)
         {
-            CurrentApp.RequestProductPurchaseAsync("donation2");
+            await CurrentApp.RequestProductPurchaseAsync("donation2");
         }
 
         private void AddRemote(object sender, RoutedEventArgs e)
