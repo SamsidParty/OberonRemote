@@ -1,4 +1,5 @@
-﻿using Oberon.Remote.Core;
+﻿using Microsoft.Xna.Framework;
+using Oberon.Remote.Core;
 
 namespace Oberon.Remote.Embedded {
     public class Program {
@@ -7,15 +8,13 @@ namespace Oberon.Remote.Embedded {
             ServerStatus.CurrentStatus.MachineName = "[Embedded Remote] " + Environment.MachineName;
             OberonManager.Initialize(new LinuxInputModule());
 
-            new Thread(() => (OberonManager.InputModule as LinuxInputModule).StartProcessingInputs()).Start();
 
             Console.WriteLine("Started Input Server");
             Console.WriteLine("Listening On IP Address: " + SocketServer.GetListenIP());
-            Console.WriteLine("Press Any Key To Stop");
             
-            Console.ReadKey();
+            var game = new HeadlessGame();
+            game.Run();
 
-            Console.WriteLine("Stopping...");
             OberonManager.SocketServer.Stop();
         }
     }

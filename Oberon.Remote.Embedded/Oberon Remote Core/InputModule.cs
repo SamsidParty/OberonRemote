@@ -16,5 +16,9 @@ namespace Oberon.Remote.Core
             CurrentControllerState[0] = 0xFF;
         }
 
+        public virtual void ProcessInputs() {
+            
+        }
+
     }
 }

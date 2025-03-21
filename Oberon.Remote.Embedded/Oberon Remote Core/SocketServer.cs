@@ -73,6 +73,7 @@ namespace Oberon.Remote.Core
                             }
 
                             UpdateRumble();
+                            OberonManager.InputModule.ProcessInputs();
                             socket.Send(OberonManager.InputModule.CurrentControllerState); // Send the latest controller packet
                         }
                     };
