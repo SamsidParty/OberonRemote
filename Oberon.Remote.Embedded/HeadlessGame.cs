@@ -14,6 +14,9 @@ namespace Oberon.Remote.Embedded {
             Graphics.PreferredBackBufferWidth = 1; 
             Graphics.PreferredBackBufferHeight = 1;
             Graphics.ApplyChanges(); 
+            Window.IsBorderless = true;
+            Window.AllowUserResizing = false;
+            Window.Position = new Point(9999, 9999);
         }
 
         protected override void Initialize()
