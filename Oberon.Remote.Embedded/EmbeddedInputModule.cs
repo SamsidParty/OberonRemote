@@ -9,7 +9,7 @@ using Oberon.Remote.Core;
 
 namespace Oberon.Remote.Embedded
 {
-    public class LinuxInputModule : InputModule
+    public class EmbeddedInputModule : InputModule
     {
 
 

@@ -6,7 +6,7 @@ namespace Oberon.Remote.Embedded {
         public static void Main(string[] args) {
 
             ServerStatus.CurrentStatus.MachineName = "[Embedded Remote] " + Environment.MachineName;
-            OberonManager.Initialize(new LinuxInputModule());
+            OberonManager.Initialize(new EmbeddedInputModule());
 
 
             Console.WriteLine("Started Input Server");
