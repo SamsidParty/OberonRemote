@@ -33,6 +33,7 @@ It takes inputs from your controller, (eg. a Dualsense), and sends it to your Xb
 # Disclaimer ⚠️
 
 Some apps and games may not work properly with Oberon Remote Input. Apps are able to detect and block synthetic inputs so there's no guarantee that everything will work smoothly in all situations.
+Some emulators like Retroarch and XBSX2 don't work with Oberon.
 
 
 # Setup Instructions ⚒️
