@@ -18,6 +18,9 @@ public class OberonStatusUI : MonoBehaviour
     string CurrentControllerImage;
     string LastControllerImage = "Missing";
 
+    public GameObject ScreenSaverPanel;
+    public bool IsScreenSaverEnabled;
+
     private void FixedUpdate()
     {
         var status = ServerStatus.CurrentStatus;
@@ -55,7 +58,12 @@ public class OberonStatusUI : MonoBehaviour
         {
             StickDebugText.text = "" + Gamepad.current.leftStick.value.ToString() + ", " + Gamepad.current.rightStick.value.ToString();
         }
+
+        ScreenSaverPanel.SetActive(IsScreenSaverEnabled);
     }
+
+    public void EnterScreenSaver() => IsScreenSaverEnabled = true;
+    public void ExitScreenSaver() => IsScreenSaverEnabled = false;
 }
 
 [Serializable]
