@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class OberonStatusUI : MonoBehaviour
 {
+    public Text MetadataText;
     public Text IPText;
     public Text ControllerText;
     public Text StickDebugText;
@@ -20,6 +21,12 @@ public class OberonStatusUI : MonoBehaviour
 
     public GameObject ScreenSaverPanel;
     public bool IsScreenSaverEnabled;
+
+    private void Start()
+    {
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+        MetadataText.text = "Oberon Remote by SamsidParty v" + Application.version;
+    }
 
     private void FixedUpdate()
     {
@@ -64,6 +71,7 @@ public class OberonStatusUI : MonoBehaviour
 
     public void EnterScreenSaver() => IsScreenSaverEnabled = true;
     public void ExitScreenSaver() => IsScreenSaverEnabled = false;
+    public void OpenURL(string url) => Application.OpenURL(url);
 }
 
 [Serializable]
