@@ -271,7 +271,7 @@ PlayerSettings:
   AndroidEnableArmv9SecurityFeatures: 0
   AndroidEnableArm64MTE: 0
   AndroidBuildApkPerCpuArchitecture: 0
-  AndroidTVCompatibility: 0
+  AndroidTVCompatibility: 1
   AndroidIsGame: 1
   AndroidEnableTango: 0
   androidEnableBanner: 1
@@ -281,7 +281,7 @@ PlayerSettings:
   - width: 320
     height: 180
     banner: {fileID: 0}
-  androidGamepadSupportLevel: 0
+  androidGamepadSupportLevel: 1
   AndroidMinifyRelease: 0
   AndroidMinifyDebug: 0
   AndroidValidateAppBundleSize: 1
